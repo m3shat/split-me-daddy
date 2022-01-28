@@ -3,7 +3,7 @@
 If you are viewing this repository on Github: this is a mirror of https://gitlab.alexware.systems/alexanderkehr/split-me-daddy.
 
 ## What is this?
-This script is designed to read a single (or miltiple) large datasets and distribute them onto multiple smaller destinations. The script attempts to fill the disks as best it can in the given order.
+This script is designed to read a single (or miltiple) large datasets and distribute them onto multiple smaller destinations without splitting single files. The script attempts to fill the disks as best it can in the given order.
 
 ## Usage
 
