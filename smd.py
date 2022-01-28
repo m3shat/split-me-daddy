@@ -93,9 +93,12 @@ def provision_files(filelist, destinations, catalogue):
 
 def copy_files(provisioned_filelist, discovered_destinations, catalogue, catalogue_file):
     try:
-        count = 1
-        l = len(provisioned_filelist)
-        printProgressBar(0, l +1, prefix = 'Copy:', suffix = 'Complete')
+        transfered = 1
+        total = 0
+        for item in provisioned_filelist:
+            total = total + item['size']
+
+        printProgressBar(transfered, total+1, prefix = 'Copy:', suffix = 'Complete')
         for file in provisioned_filelist:
             src = os.path.join(file['path'], file['name'])
 
@@ -107,14 +110,15 @@ def copy_files(provisioned_filelist, discovered_destinations, catalogue, catalog
             dst = os.path.join(destination_path, file['backup']['path'])
 
             if not dryrun:
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
                 shutil.copyfile(src, dst)
 
             catalogue['files'].append(file)
 
-            printProgressBar(count + 1, l, prefix = 'Copy:', suffix = 'Complete')
-            count = count + 1
+            transfered = transfered + file['size']
+            printProgressBar(transfered, total, prefix = 'Copy:', suffix = 'Complete')
 
-        if l == 0:
+        if total == 0:
             printProgressBar(1, 1, prefix = 'Copy:', suffix = 'Complete')
 
     except KeyboardInterrupt:
